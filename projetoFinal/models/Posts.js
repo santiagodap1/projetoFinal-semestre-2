@@ -22,11 +22,6 @@ module.exports = (sequelize, type) => {
         image: {
             type: type.BLOB,
             allowNull: true
-        },
-        qt_likes: {
-            type: type.INTEGER.UNSIGNED,
-            allowNull: false,
-            defaultValue: 0
         }
     });
 };
