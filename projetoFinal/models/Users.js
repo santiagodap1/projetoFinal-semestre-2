@@ -17,21 +17,6 @@ module.exports = (sequelize, type) => {
         password: {
             type: type.STRING(255),
             allowNull: false
-        },
-        qt_followers: {
-            type: type.INTEGER.UNSIGNED,
-            allowNull: false,
-            defaultValue: 0
-        },
-        qt_following: {
-            type: type.INTEGER.UNSIGNED,
-            allowNull: false,
-            defaultValue: 0
-        },
-        qt_posts: {
-            type: type.INTEGER.UNSIGNED,
-            allowNull: false,
-            defaultValue: 0
         }
     });
 };

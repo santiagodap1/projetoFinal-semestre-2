@@ -2,25 +2,31 @@ var dotenv = require('dotenv');
 dotenv.config();
 const { Sequelize, DataTypes} = require('sequelize');
 
-const sequelize = new Sequelize(
-    process.env.DB_SCHEMA,
-    process.env.DB_USER,
-    process.env.DB_PASS,
-    {
-      host: process.env.DB_HOST,
-      dialect: 'mysql',
-      dialectOptions: {
-        ssl: {
-          require: true
-        }
-      }
-    }
-  );
+// const sequelize = new Sequelize(
+//     process.env.DB_SCHEMA,
+//     process.env.DB_USER,
+//     process.env.DB_PASS,
+//     {
+//       host: process.env.DB_HOST,
+//       dialect: 'mysql',
+//       dialectOptions: {
+//         ssl: {
+//           require: true
+//         }
+//       }
+//     }
+//   );
+
+
+//so para testar nao e o final
+const sequelize = new Sequelize('projetoFinalBackend', 'root', 'andando10-', {
+  dialect: 'mysql'
+})
 
 const UserDataModel = require("./models/Users");
-const PostDataModel = require('./models/post');
-const FollowDataModel = require('./models/follow');
-const PostlikeDataModel = require('./models/post_like');
+const PostDataModel = require('./models/Posts');
+const FollowDataModel = require('./models/Follows');
+const PostlikeDataModel = require('./models/Post_likes');
 
 console.log(process.env.DB_SCHEMA)
 console.log(process.env.DB_USER)
@@ -52,7 +58,7 @@ Post.belongsToMany(User, { through: PostLike, as: 'Likes', foreignKey: 'post_id'
 
 
 
-sequelize.sync({ force: false })
+sequelize.sync({ force: true })
 .then(() => {
     console.log("Tables created!");
     })

@@ -10,7 +10,7 @@ module.exports = (sequelize, type) => {
             type: type.INTEGER,
             allowNull: false,
             references: {
-                model: 'user',
+                model: 'users',
                 key: 'user_id'
             },
             onDelete: 'CASCADE'
@@ -22,11 +22,6 @@ module.exports = (sequelize, type) => {
         image: {
             type: type.BLOB,
             allowNull: true
-        },
-        created_at: {
-            type: type.DATE,
-            allowNull: false,
-            defaultValue: type.NOW
         },
         qt_likes: {
             type: type.INTEGER.UNSIGNED,

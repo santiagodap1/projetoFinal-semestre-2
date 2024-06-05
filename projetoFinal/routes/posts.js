@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var usersController = require("../controllers/postsController");
+var postsController = require("../controllers/postsController");
 
-router.get('/', usersController.getAllPosts);
+router.get('/', postsController.getAllPosts);
 
 module.exports = router;
