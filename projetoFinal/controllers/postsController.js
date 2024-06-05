@@ -87,7 +87,6 @@ exports.updatePost = (req, res, next) => {
 
 exports.getFollowingPosts = (req, res, next) => {
     const userId = req.params.userId;
-
     Follow.findAll({
         where: { follower_id: userId }
     })
@@ -95,7 +94,8 @@ exports.getFollowingPosts = (req, res, next) => {
         const followedIds = follows.map(follow => follow.followed_id);
 
         Post.findAll({
-            where: { user_id: { [Op.in]: followedIds } }
+            where: { user_id: { [Op.in]: followedIds } },
+            order: [['createdAt', 'DESC']] 
         })
         .then(posts => {
             res.status(200).json(posts);
