@@ -58,7 +58,7 @@ Post.belongsToMany(User, { through: PostLike, as: 'Likes', foreignKey: 'post_id'
 
 
 
-sequelize.sync({ force: true })
+sequelize.sync({ force: false })
 .then(() => {
     console.log("Tables created!");
     })
