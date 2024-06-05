@@ -1,16 +1,14 @@
 var express = require('express');
 var router = express.Router();
-var usersController = require("../controllers/usersController");
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+var indexController = require("../controllers/indexController");
 
 
-// router.post('/login', function(req, res, next) {
-//   res.send({ userid: 'Express' });
-// });
+router.post('/signup', indexController.signup);
 
-router.post('/login', usersController.postUser);
+
+router.post('/login', indexController.login);
+
+
+router.get('/logout', indexController.logout);
+
 module.exports = router;
