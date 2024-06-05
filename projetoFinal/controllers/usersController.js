@@ -35,7 +35,6 @@ exports.updateUser = (req, res, next) => {
         if (user && user.user_id !== userId) {
             res.status(400).json({ message: 'Username or email already exist.' });
         } else {
-            
             User.update({
                 ...(username && { username: username }),
                 ...(email && { email: email }),

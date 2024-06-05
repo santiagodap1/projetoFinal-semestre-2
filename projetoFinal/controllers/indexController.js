@@ -50,7 +50,10 @@ exports.signup = function (req, res) {
 };
 
 
-
+// {
+//     "email": "teste@gmail.com",
+//     "password": "teste1"
+// }
 exports.login = function (req, res) {
     var { email, password } = req.body;
     User.findOne({
