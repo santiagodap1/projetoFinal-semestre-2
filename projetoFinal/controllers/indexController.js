@@ -1,39 +1,51 @@
 const User = require('../sequelize').User;
 var jwt = require('jsonwebtoken');
+const { Op } = require("sequelize");
 
 function generateAccessToken(email, password) {
     var token = jwt.sign({ email, password }, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
     return token;
 }
 
+
+
+// {
+//     "username": "test1434",
+//     "email": "testse@gmail.com",
+//     "password": "teste1"
+// }
 exports.signup = function (req, res) {
     const { email, password, username } = req.body;
-    User.findOne({
-        where: { email: email }
-    }).then(result => {
-        if (result != null) {
-            req.flash('signupMessage', 'That email is already taken.');
-            return res.redirect('/signup');
-        }
-        return User.findOne({
-            where: { username: username }
-        });
-    }).then(result => {
-        if (result != null) {
-            req.flash('signupMessage', 'That username is already taken.');
-            return res.redirect('/signup');
-        }
 
+    User.findOne({
+        where: {
+            [Op.or]: [
+                { username: username },
+                { email: email }
+            ]
+        }
+    }).then(existingUser => {
+        if (existingUser) {
+            let message = '';
+            if (existingUser.email === email) {
+                message = 'That email is already taken.';
+            } else {
+                message = 'That username is already taken.';
+            }
+            req.flash('signupMessage', message);
+            return res.status(409).json({ error: message }); 
+        }
         return User.create({ email: email, password: password, username: username });
-    }).then(user => {
+    }).then(newUser => {
+        
         const token = generateAccessToken(email, password);
-        req.session.user = user;
+        req.session.user = newUser;
         req.session.token = token;
-        res.status(200).json({ user, token });
-        res.redirect('/home');
+        res.status(200).json({ user: newUser, token });
     }).catch(err => {
+
         req.flash('signupMessage', err.message);
-        res.redirect('/signup');
+        // res.redirect('/signup');
     });
 };
 
@@ -59,7 +71,7 @@ exports.login = function (req, res) {
         }
     }).catch(function (err) {
         req.flash('loginMessage', err);
-        res.redirect('/login');
+        // res.redirect('/login');
     });
 }
 
@@ -68,7 +80,7 @@ exports.logout = function(req, res) {
         if(err) {
             console.log(err);
         } else {
-            res.redirect('/login');
+            // res.redirect('/login');
         }
     });
 }

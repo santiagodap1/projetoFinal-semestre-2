@@ -2,12 +2,14 @@ var express = require('express');
 var router = express.Router();
 var usersController = require("../controllers/usersController");
 var followsController = require("../controllers/followsController");
+const authenticateToken = require('../middleware/authenticateToken');
+
+router.use(authenticateToken);
 
 router.get('/', usersController.getAllUsers);
 router.get('/:userId', usersController.getUserById);
 router.put('/:userId', usersController.updateUser);
 router.delete('/:userId', usersController.deleteUser);
-
 
 
 router.get('/:userId/followers', followsController.getAllFollowers);

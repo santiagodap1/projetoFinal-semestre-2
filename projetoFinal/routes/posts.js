@@ -3,8 +3,10 @@ var router = express.Router();
 var postsController = require("../controllers/postsController");
 var postLikesController = require("../controllers/post_likesController");
 var commentsController = require("../controllers/commentsController");
+const authenticateToken = require('../middleware/authenticateToken');
 
-
+router.use(authenticateToken);
+    
 router.get('/user/:userId', postsController.getUserPosts);
 router.get('/:postId', postsController.getPostById);
 router.post('/', postsController.createPost);
