@@ -1,6 +1,7 @@
 
 const Post = require('../sequelize').Post;
 const Follow = require("../sequelize").Follow;
+const { Op } = require("sequelize");
 
 exports.getUserPosts = (req, res, next) => {
     const userId = req.params.userId;
@@ -73,7 +74,8 @@ exports.deletePost = (req, res, next) => {
 
 exports.updatePost = (req, res, next) => {
     const postId = req.params.postId;
-    const { content, image } = req.body;
+    const image = req.file ? req.file.path : null;
+    const { content } = req.body;
 
     Post.update({
         ...(content && { content: content }),

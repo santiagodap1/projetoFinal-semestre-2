@@ -14,7 +14,7 @@ router.get('/:postId', postsController.getPostById);
 router.post('/', upload, postsController.createPost);
 
 router.delete('/:postId', postsController.deletePost);
-router.put('/:postId', postsController.updatePost);
+router.put('/:postId',upload, postsController.updatePost);
 router.get('/following/:userId', postsController.getFollowingPosts);
 
 router.post('/like', postLikesController.likePost);
