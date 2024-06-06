@@ -2,26 +2,27 @@ var dotenv = require('dotenv');
 dotenv.config();
 const { Sequelize, DataTypes } = require('sequelize');
 
-// const sequelize = new Sequelize(
-//     process.env.DB_SCHEMA,
-//     process.env.DB_USER,
-//     process.env.DB_PASS,
-//     {
-//       host: process.env.DB_HOST,
-//       dialect: 'mysql',
-//       dialectOptions: {
-//         ssl: {
-//           require: true
-//         }
-//       }
-//     }
-//   );
 
+const sequelize = new Sequelize(process.env.DB_SCHEMA , process.env.DB_USERS, process.env.DB_PASS, {
+    dialect: 'mysql',
+    dialectOptions:{
+        ssl:{
+            require:true
+        },
+    host:process.env.DB_HOST,
+    pool:{
+        max:10,
+        min:0,
+        acquire:30000,
+        idle:10000
+    }
+    }
+})
 
 //so para testar nao e o final
-const sequelize = new Sequelize('projetoFinalBackend', 'root', 'andando10-', {
-    dialect: 'mysql'
-})
+// const sequelize = new Sequelize('projetoFinalBackend', 'root', 'andando10-', {
+//     dialect: 'mysql'
+// })
 
 const UserDataModel = require("./models/Users");
 const PostDataModel = require('./models/Posts');
